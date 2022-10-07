@@ -1,21 +1,17 @@
-function getRandomArbitrary(min, max) {
-  if (min >= max) {
-    return -1;
+const getRandomArbitrary = (min, max) => {
+  if (min < 0 || max < 0 || min === max) {
+    return NaN;
   }
-  min = Math.ceil(min);
-  max = Math.floor(max);
+
+  if (min > max) {
+    [min, max] = [max, min];
+  }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 getRandomArbitrary(0, 10);
 
-function maxStringLength(stringChecked, maxLength) {
-  if (stringChecked.length <= maxLength) {
-    console.log('true');
-  }
-  else {
-    console.log('false');
-  }
-}
 
-maxStringLength('aaaaaaaaa', 3);
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
+
+checkStringLength('aaaaaaaaa', 3);
