@@ -36,21 +36,18 @@ const getRandomArbitrary = (min, max) => {
 
 
 const checkStringLength = (string, maxLength) => string.length <= maxLength;
+checkStringLength('qqqqqq', 9);
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomArbitrary(0, elements.length - 1)]
-};
+const getRandomArrayElement = (elements) => elements[getRandomArbitrary(0, elements.length - 1)];
 
-const descriptionPhoto = () => {
-  return {
-    id: getRandomArrayElement(ID),
-    url: getRandomArrayElement(URL),
-    description: DESCRIPTION,
-    likes: getRandomArrayElement(LIKES),
-    comments: getRandomArrayElement(COMMENTS)
-  };
-};
+const descriptionPhoto = () => ({
+  id: getRandomArrayElement(ID),
+  url: getRandomArrayElement(URL),
+  description: DESCRIPTION,
+  likes: getRandomArrayElement(LIKES),
+  comments: getRandomArrayElement(COMMENTS)
+});
 
 const differentObject = Array.from({length: DIFFERENT_OBJECT}, descriptionPhoto);
 
-console.log(differentObject);
+differentObject();
