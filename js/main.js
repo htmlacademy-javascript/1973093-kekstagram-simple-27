@@ -27,5 +27,5 @@ const createPhoto = () => {
   };
 };
 
-const createPhotos = Array.from({length: OBJECT_COUNTER}, createPhoto);
+const createPhotos = () => Array.from({length: OBJECT_COUNTER}, createPhoto);
 createPhotos();
