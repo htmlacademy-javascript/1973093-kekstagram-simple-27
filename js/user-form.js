@@ -11,8 +11,6 @@ fotoForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-
-  } else {
-
+    return 1;
   }
 });

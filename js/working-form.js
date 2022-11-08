@@ -38,7 +38,7 @@ const onUploadFormCloseClick = (evt) => {
 };
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === "Escape") {
+  if (evt.key === 'Escape') {
     evt.preventDefault();
     closeModal();
   }
