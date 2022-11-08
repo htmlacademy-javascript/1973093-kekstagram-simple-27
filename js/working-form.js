@@ -40,12 +40,12 @@ const onDocumentKeydown = (evt) => {
 function addListeners () {
   uploadFormClose.addEventListener('click', onUploadFormCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
-};
+}
 
 function removeListeners () {
   uploadFormClose.removeEventListener('click', onUploadFormCloseClick);
   document.removeEventListener('keydown', onDocumentKeydown);
-};
+}
 
 const onUploadFileChange = () => {
   openModal();
