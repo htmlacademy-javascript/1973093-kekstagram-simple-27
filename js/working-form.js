@@ -1,3 +1,5 @@
+import {addImgEffectsListeners, resetImgEffects} from "./size-image.js"
+
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -22,6 +24,7 @@ const closeModal = () => {
   uploadForm.reset();
   pristine.reset();
   removeListeners();
+  resetImgEffects();
 };
 
 const onUploadFormCloseClick = (evt) => {
@@ -59,6 +62,7 @@ const onPhotoFormSubmit = (evt) => {
 const addFormAction = () => {
   uploadFile.addEventListener('change', onUploadFileChange);
   uploadFile.addEventListener('submit', onPhotoFormSubmit);
+  addImgEffectsListeners();
 };
 
 export {addFormAction};
