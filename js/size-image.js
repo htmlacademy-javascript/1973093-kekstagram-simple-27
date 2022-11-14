@@ -1,7 +1,7 @@
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const scaleImage = document.querySelector('.img-upload__preview');
+const scaleImage = document.querySelector('.img-upload__preview img');
 const MAX_SCALE_LEVEL = 1;
 const SCALE_STEP = 0.25;
 const PERCENT_RATIO = 100;
@@ -27,22 +27,20 @@ const onScaleControlBiggerClick = (evt) => {
   scaleControlValue.value = `${currentScaleLevel * PERCENT_RATIO}%`;
 };
 
-const addImgEffectsListeners = () => {
+const addImgScaleListeners = () => {
   scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
   scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
 };
 
-const resetImgEffects = () => {
-  currentScaleLevel = 1;
-  scaleImage.style.transform = null;
+const removeImgScaleListeners = () => {
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.removeEventListener('click', onScaleControlBiggerClick);
 };
 
-export {addImgEffectsListeners, resetImgEffects};
+const resetImgScale = () => {
+  currentScaleLevel = 1;
+  scaleImage.style.transform = null;
+  removeImgScaleListeners();
+};
 
-// noUiSlider.create(scaleControlValue, {
-//   range: {
-//     min: 25%,
-//     max: 100%,
-//   },
-//   start: 100%,
-// });
+export {addImgScaleListeners, resetImgScale};

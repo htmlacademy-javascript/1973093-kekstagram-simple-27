@@ -1,134 +1,102 @@
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
-const effectRadioChrome = document.querySelector('#effect-chrome');
-const effectRadioSepia = document.querySelector('#effect-sepia');
-const effectRadioMarvin = document.querySelector('#effect-marvin');
-const effectRadioPhobos = document.querySelector('#effect-phobos');
-const effectRadioHeat = document.querySelector('#effect-heat');
-
-noUiSlider.create(effectLevelSlider, {
-  range: {
+const RANGE_OPTIONS = {
+  grayscale: {
     min: 0,
     max: 1,
+    step: 0.1,
   },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-});
+  sepia: {
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  invert: {
+    min: 0,
+    max: 100,
+    step: 1,
+  },
+  blur: {
+    min: 0,
+    max: 3,
+    step: 0.1,
+  },
+  brightness: {
+    min: 1,
+    max: 3,
+    step: 0.1,
+  },
+};
 
-effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-});
+const FILTER_NAME = {
+  chrome: 'grayscale',
+  sepia: 'sepia',
+  marvin: 'invert',
+  phobos: 'blur',
+  heat: 'brightness',
+};
 
-effectRadioChrome.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 1,
-      step: 0.1,
-      connect: 'lower',
-    });
-  } else {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-    });
+const UNIT = {
+  invert: '%',
+  blur: 'px',
+};
+
+const image = document.querySelector('.img-upload__preview img');
+const sliderElementField = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level__value');
+
+const createSlider = () => {
+  noUiSlider.create(sliderElementField, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 100,
+    step: 1,
+    connect: 'lower',
+  });
+};
+
+
+const resetFilter = () => {
+  if (sliderElementField.noUiSlider) {
+    sliderElementField.noUiSlider.destroy();
   }
-});
+  image.style.filter = null;
+  image.className = '';
+  sliderElementField.classList.add('hidden');
+};
 
-effectRadioSepia.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 1,
-      step: 0.1,
-      connect: 'lower',
-    });
-  } else {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-    });
+const changeEffect = ({target}) => {
+  if (target.value === 'none') {
+    resetFilter();
+    return;
   }
-});
 
-effectRadioMarvin.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      start: 100,
-      step: 1,
-      connect: 'lower',
-    });
-  } else {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-    });
+  if (!sliderElementField.noUiSlider) {
+    createSlider();
   }
-});
 
-effectRadioPhobos.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3,
-      },
-      start: 3,
-      step: 0.1,
-      connect: 'lower',
-    });
-  } else {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-    });
-  }
-});
+  sliderElementField.classList.remove('hidden');
 
-effectRadioHeat.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3,
-      },
-      start: 3,
-      step: 0.1,
-      connect: 'lower',
-    });
-  } else {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-    });
-  }
-});
+  const effect = FILTER_NAME[target.value];
+  const {min, max, step} = RANGE_OPTIONS[effect];
+  const unit = UNIT[effect] ? UNIT[effect] : '';
 
-// effectLevelSlider.noUiSlider.destroy();
+  image.className = '';
+
+  sliderElementField.noUiSlider.updateOptions({
+    range: {
+      min,
+      max,
+    },
+    start: max,
+    step,
+    connect: 'lower',
+  });
+
+  sliderElementField.noUiSlider.on('update', () => {
+    effectLevel.value = sliderElementField.noUiSlider.get();
+    image.style.filter = `${effect}(${effectLevel.value}${unit})`;
+  });
+};
+
+export {changeEffect, resetFilter};
