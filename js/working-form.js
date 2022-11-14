@@ -1,10 +1,13 @@
+import {addImgScaleListeners, resetImgScale} from './size-image.js';
+import {changeEffect, resetFilter} from './images-effects.js';
+
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFormClose = document.querySelector('.img-upload__cancel');
-const photoForm = document.querySelector('.img-upload__form');
+const uploadEffectsBlock = document.querySelector('.img-upload__effects');
 
-const pristine = new Pristine (photoForm, {
+const pristine = new Pristine (uploadForm, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'img-upload__text--error-text',
@@ -14,6 +17,7 @@ const openModal = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   addListeners();
+  addImgScaleListeners();
 };
 
 const closeModal = () => {
@@ -22,6 +26,8 @@ const closeModal = () => {
   uploadForm.reset();
   pristine.reset();
   removeListeners();
+  resetImgScale();
+  resetFilter();
 };
 
 const onUploadFormCloseClick = (evt) => {
@@ -51,14 +57,19 @@ const onUploadFileChange = () => {
   openModal();
 };
 
-const onPhotoFormSubmit = (evt) => {
+const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {}
 };
 
+const onUploadEffectsChange = (evt) => {
+  changeEffect(evt);
+};
+
 const addFormAction = () => {
   uploadFile.addEventListener('change', onUploadFileChange);
-  uploadFile.addEventListener('submit', onPhotoFormSubmit);
+  uploadForm.addEventListener('submit', onUploadFormSubmit);
+  uploadEffectsBlock.addEventListener('change', onUploadEffectsChange);
 };
 
 export {addFormAction};
