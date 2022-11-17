@@ -59,14 +59,24 @@ const onUploadFileChange = () => {
 
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
-  if (pristine.validate()) {}
+  if (pristine.validate()) {
+    const formData = new FormData(evt.target);
+
+    fetch(
+      'https://27.javascript.pages.academy/kekstagram-simple',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+  }
 };
 
 const onUploadEffectsChange = (evt) => {
   changeEffect(evt);
 };
 
-const addFormAction = () => {
+const addFormAction = (onSuccess) => {
   uploadFile.addEventListener('change', onUploadFileChange);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
   uploadEffectsBlock.addEventListener('change', onUploadEffectsChange);
