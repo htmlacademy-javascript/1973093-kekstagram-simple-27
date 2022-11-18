@@ -1,5 +1,8 @@
 import {addImgScaleListeners, resetImgScale} from './size-image.js';
 import {changeEffect, resetFilter} from './images-effects.js';
+import {sendData} from './api.js';
+import {renderPostErrorMessage} from './create-error.js';
+import {renderSuccessMessage} from './create-success.js';
 
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
@@ -61,14 +64,7 @@ const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     const formData = new FormData(evt.target);
-
-    fetch(
-      'https://27.javascript.pages.academy/kekstagram-simple',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
+    sendData(renderSuccessMessage, renderPostErrorMessage, formData);
   }
 };
 
@@ -76,7 +72,7 @@ const onUploadEffectsChange = (evt) => {
   changeEffect(evt);
 };
 
-const addFormAction = (onSuccess) => {
+const addFormAction = () => {
   uploadFile.addEventListener('change', onUploadFileChange);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
   uploadEffectsBlock.addEventListener('change', onUploadEffectsChange);
