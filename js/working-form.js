@@ -1,5 +1,8 @@
 import {addImgScaleListeners, resetImgScale} from './size-image.js';
 import {changeEffect, resetFilter} from './images-effects.js';
+import {sendData} from './api.js';
+import {renderPostErrorMessage} from './create-error.js';
+import {renderSuccessMessage} from './create-success.js';
 
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
@@ -59,7 +62,10 @@ const onUploadFileChange = () => {
 
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
-  if (pristine.validate()) {}
+  if (pristine.validate()) {
+    const formData = new FormData(evt.target);
+    sendData(renderSuccessMessage, renderPostErrorMessage, formData);
+  }
 };
 
 const onUploadEffectsChange = (evt) => {

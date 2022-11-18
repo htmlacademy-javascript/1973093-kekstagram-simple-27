@@ -1,12 +1,10 @@
-import {createPhotos} from './data.js';
+import {getData} from './api.js';
+import {renderGetErrorMessage} from './create-error.js';
 
 const randomUsersImageTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesBlock = document.querySelector('.pictures');
 
-const data = createPhotos();
-
-
-const renderPictures = () => {
+const renderPictures = (data) => {
   data.forEach(({url, likes, comments}) => {
     const pictureElement = randomUsersImageTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
@@ -16,4 +14,8 @@ const renderPictures = () => {
   });
 };
 
-export {renderPictures};
+const loadImages = () => {
+  getData(renderPictures, renderGetErrorMessage);
+};
+
+export {loadImages};

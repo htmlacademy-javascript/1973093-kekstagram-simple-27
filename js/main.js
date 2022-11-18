@@ -1,6 +1,5 @@
-import {renderPictures} from './render-picture.js';
 import {addFormAction} from './working-form.js';
-import './images-effects.js';
+import {loadImages} from './render-picture.js';
 
-renderPictures();
 addFormAction();
+loadImages();
