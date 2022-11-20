@@ -9,6 +9,8 @@ const uploadFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFormClose = document.querySelector('.img-upload__cancel');
 const uploadEffectsBlock = document.querySelector('.img-upload__effects');
+const sliderElementFieldWrapper = document.querySelector('.img-upload__effect-level');
+const imgUploadSubmitBtn = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine (uploadForm, {
   classTo: 'img-upload__text',
@@ -60,11 +62,23 @@ const onUploadFileChange = () => {
   openModal();
 };
 
+const onSendDataSuccessCallback = () => {
+  renderSuccessMessage();
+  imgUploadSubmitBtn.disabled = false;
+  closeModal();
+};
+
+const onSendDataErrorCallback = () => {
+  renderPostErrorMessage();
+  imgUploadSubmitBtn.disabled = false;
+};
+
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    imgUploadSubmitBtn.disabled = true;
     const formData = new FormData(evt.target);
-    sendData(renderSuccessMessage, renderPostErrorMessage, formData);
+    sendData(onSendDataSuccessCallback, onSendDataErrorCallback, formData);
   }
 };
 
@@ -73,6 +87,7 @@ const onUploadEffectsChange = (evt) => {
 };
 
 const addFormAction = () => {
+  sliderElementFieldWrapper.classList.add('hidden');
   uploadFile.addEventListener('change', onUploadFileChange);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
   uploadEffectsBlock.addEventListener('change', onUploadEffectsChange);
