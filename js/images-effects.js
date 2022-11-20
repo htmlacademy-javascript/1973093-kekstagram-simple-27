@@ -41,6 +41,7 @@ const UNIT = {
 
 const image = document.querySelector('.img-upload__preview img');
 const sliderElementField = document.querySelector('.effect-level__slider');
+const sliderElementFieldWrapper = document.querySelector('.img-upload__effect-level');
 const effectLevel = document.querySelector('.effect-level__value');
 
 const createSlider = () => {
@@ -61,8 +62,7 @@ const resetFilter = () => {
     sliderElementField.noUiSlider.destroy();
   }
   image.style.filter = null;
-  image.className = '';
-  sliderElementField.classList.add('hidden');
+  sliderElementFieldWrapper.classList.add('hidden');
 };
 
 const changeEffect = ({target}) => {
@@ -75,13 +75,11 @@ const changeEffect = ({target}) => {
     createSlider();
   }
 
-  sliderElementField.classList.remove('hidden');
+  sliderElementFieldWrapper.classList.remove('hidden');
 
   const effect = FILTER_NAME[target.value];
   const {min, max, step} = RANGE_OPTIONS[effect];
   const unit = UNIT[effect] ? UNIT[effect] : '';
-
-  image.className = '';
 
   sliderElementField.noUiSlider.updateOptions({
     range: {

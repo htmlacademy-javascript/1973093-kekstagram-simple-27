@@ -6,7 +6,7 @@ const getData = (onSuccess, onFail) => {
     .then((response) => response.json())
     .then((data) => onSuccess(data))
     .catch(() => {
-      onFail('Не удалось получить данные. Попробуйте ещё раз');
+      onFail();
     });
 };
 
@@ -22,11 +22,11 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail();
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail();
     });
 };
 
