@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "2.0.20"
   },
   "scripts": {
     "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
