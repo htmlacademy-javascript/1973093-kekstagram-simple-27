@@ -7,14 +7,18 @@ const SCALE_STEP = 0.25;
 const PERCENT_RATIO = 100;
 let currentScaleLevel = 1;
 
+const updateScale = (scaleLevel) => {
+  scaleImage.style.transform = `scale(${scaleLevel})`;
+  scaleControlValue.value = `${scaleLevel * PERCENT_RATIO}%`;
+};
+
 const onScaleControlSmallerClick = (evt) => {
   evt.preventDefault();
   if (currentScaleLevel <= SCALE_STEP) {
     return;
   }
   currentScaleLevel = currentScaleLevel - SCALE_STEP;
-  scaleImage.style.transform = `scale(${currentScaleLevel})`;
-  scaleControlValue.value = `${currentScaleLevel * PERCENT_RATIO}%`;
+  updateScale(currentScaleLevel);
 };
 
 const onScaleControlBiggerClick = (evt) => {
@@ -23,8 +27,7 @@ const onScaleControlBiggerClick = (evt) => {
     return;
   }
   currentScaleLevel = currentScaleLevel + SCALE_STEP;
-  scaleImage.style.transform = `scale(${currentScaleLevel})`;
-  scaleControlValue.value = `${currentScaleLevel * PERCENT_RATIO}%`;
+  updateScale(currentScaleLevel);
 };
 
 const addImgScaleListeners = () => {
@@ -38,7 +41,7 @@ const removeImgScaleListeners = () => {
 };
 
 const resetImgScale = () => {
-  currentScaleLevel = 1;
+  currentScaleLevel = MAX_SCALE_LEVEL;
   scaleImage.style.transform = null;
   removeImgScaleListeners();
 };

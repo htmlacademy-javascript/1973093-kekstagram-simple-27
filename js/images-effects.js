@@ -1,42 +1,39 @@
 const RANGE_OPTIONS = {
-  grayscale: {
+  chrome: {
+    name : 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
+    unit: ''
   },
   sepia: {
+    name : 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
+    unit: ''
   },
-  invert: {
+  marvin: {
+    name : 'invert',
     min: 0,
     max: 100,
     step: 1,
+    unit: '%'
   },
-  blur: {
+  phobos: {
+    name : 'blur',
     min: 0,
     max: 3,
     step: 0.1,
+    unit: 'px'
   },
-  brightness: {
+  heat: {
+    name : 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
+    unit: ''
   },
-};
-
-const FILTER_NAME = {
-  chrome: 'grayscale',
-  sepia: 'sepia',
-  marvin: 'invert',
-  phobos: 'blur',
-  heat: 'brightness',
-};
-
-const UNIT = {
-  invert: '%',
-  blur: 'px',
 };
 
 const image = document.querySelector('.img-upload__preview img');
@@ -77,9 +74,7 @@ const changeEffect = ({target}) => {
 
   sliderElementFieldWrapper.classList.remove('hidden');
 
-  const effect = FILTER_NAME[target.value];
-  const {min, max, step} = RANGE_OPTIONS[effect];
-  const unit = UNIT[effect] ? UNIT[effect] : '';
+  const {name, min, max, step, unit} = RANGE_OPTIONS[target.value];
 
   sliderElementField.noUiSlider.updateOptions({
     range: {
@@ -93,7 +88,7 @@ const changeEffect = ({target}) => {
 
   sliderElementField.noUiSlider.on('update', () => {
     effectLevel.value = sliderElementField.noUiSlider.get();
-    image.style.filter = `${effect}(${effectLevel.value}${unit})`;
+    image.style.filter = `${name}(${effectLevel.value}${unit})`;
   });
 };
 
